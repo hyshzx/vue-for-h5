@@ -1,0 +1,344 @@
+@charset "utf-8";
+$baseFontSize: 26px;
+$minorFontSize: 0.846rem;
+
+/*22px*/
+
+$biggerFontSize:1.07rem;
+$mainFontColor: #333333;
+$minorFontColor: #999999;
+$borderColor: #cbcbcb;
+$red: #c90920;
+$orange: #eb5800;
+* {
+  box-sizing: border-box;
+}
+
+html {
+  // overflow-y: auto;
+  // -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
+  background: #efefef;
+  font-size: $baseFontSize;
+  min-height: 700px;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+body {
+  // overflow-y: auto;
+  -webkit-text-size-adjust: none;
+  color: $mainFontColor;
+  /* background: #f7f7f7; */
+  line-height: 1;
+  font-family: "Droid Sans", "PingFang", "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif !important;
+  height: 100%;
+}
+
+input,
+textarea {
+  font-family: arial;
+}
+
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #999;
+  opacity: 1;
+  font-size: 30px;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #999;
+  opacity: 1;
+  font-size: 30px
+}
+
+input:-ms-input-placeholder {
+  color: #999;
+  opacity: 1;
+  font-size: 30px;
+}
+
+input::-webkit-input-placeholder {
+  color: #999;
+  opacity: 1;
+  font-size: 30px;
+}
+
+header,
+footer,
+section,
+aside,
+article,
+nav,
+hgroup,
+figure,
+figcaption,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+form,
+p,
+dl,
+dt,
+dd,
+blockquote,
+legend,
+table,
+th,
+td,
+fieldset,
+menu,
+pre {
+  margin: 0;
+  padding: 0
+}
+
+table,
+th,
+td,
+img,
+fieldset {
+  border: 0
+}
+
+time,
+mark,
+output,
+meter,
+address,
+cite,
+em,
+code,
+var,
+dfn,
+ins,
+i,
+th,
+caption {
+  font-style: normal;
+  text-decoration: none
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+th {
+  font-size: 100%;
+  font-weight: normal
+}
+
+input,
+select,
+button,
+textarea,
+table {
+  margin: 0;
+  font-family: inherit;
+  font-size: 100%
+}
+
+abbr,
+acronym {
+  border: 0;
+  font-variant: normal
+}
+
+q:before,
+q:after {
+  content: ""
+}
+
+ul,
+ol {
+  list-style: none
+}
+
+p,
+div {
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
+th,
+caption {
+  text-align: left
+}
+
+header,
+footer,
+section,
+aside,
+article,
+nav,
+hgroup,
+figure,
+figcaption {
+  display: block
+}
+
+a {
+  color: $mainFontColor;
+  text-decoration: none;
+  outline: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+}
+
+input,
+textarea,
+select {
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+  background: none;
+  line-height: inherit;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  width: 60px;
+  height: 60px;
+  margin-right: 4px;
+  background: url(../static/img/common/no.png) no-repeat 16px 16px;
+}
+
+input[type="radio"]:checked,
+input[type="checkbox"]:checked {
+  background: url(../static/img/common/yes.png) no-repeat 16px 16px;
+}
+
+.header,
+.content,
+.footer {
+  width: 750px;
+  // width: 100%;
+  margin: 0 auto;
+  // -webkit-overflow-scrolling: touch;
+}
+
+.hide {
+  display: none;
+}
+
+div[id^="ads"] {
+  display: none;
+}
+
+span [id^="ads"] {
+  display: none;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex_column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex_row {
+  display: flex;
+  flex-direction: row;
+}
+
+.allCenter {
+  justify-content: center;
+  align-items: center;
+}
+
+.shrink0 {
+  flex-shrink: 0;
+}
+
+.grow1 {
+  flex-grow: 1;
+}
+
+.hide {
+  display: none;
+}
+
+// the css for confim dialog base the iview component modal
+.ivu-modal {
+  width: 530px !important;
+  left: 110px;
+  top: 300px;
+}
+
+.ivu-modal-body {
+  border-radius: 20px;
+  padding: 0px;
+}
+
+.ivu-modal-content {
+  border-radius: 20px;
+}
+
+.ivu-modal-confirm {
+  padding: 0px;
+  .ivu-modal-confirm-head {
+    display: none;
+  }
+  .ivu-modal-confirm-body {
+    font-size: 1.15rem;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 130px;
+    margin-top: 0px;
+    padding-left: 0px;
+    padding-top: 0px;
+    .ivu-icon-help-circled {
+      display: none;
+    }
+  }
+  .ivu-modal-confirm-footer {
+    display: flex;
+    height: 90px;
+    font-size: 1.15rem;
+    margin-top: 0px;
+    border-top: 1px solid #cbcbcb;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    button {
+      width: 50%;
+      height: 100%;
+      font-size: 1.15rem;
+      color: #1782e8;
+      border: none;
+      outline: none;
+      background-color: #fff;
+    }
+    button:nth-child(1) {
+      border-right: 1px solid #cbcbcb;
+      border-bottom-left-radius: 20px;
+    }
+    button:nth-child(2) {
+      border-bottom-right-radius: 20px;
+    }
+  }
+}
