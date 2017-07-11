@@ -13,16 +13,15 @@
         <div class="edit">
           <input name='p-default-addr' type="radio" class="item-ckbox p-set-default-address" @change="defaultChoose(item.id)" item.dft>默认收获地址
           <a class='p-delete-address' @click="deleteAddr(item.id)"><img src="../../static/img/common/icon_x.png" alt=""></a>
-          <button class='p-edit-address g-link'>编辑</button>
+          <button class='p-edit-address g-link' @click="gotoPage(item.id)">编辑</button>
         </div>
       </div>
       <div class="p-no-address hide">暂无收获地址，请添加收获地址</div>
     </div>
     <div class="p-add-address-contain">
-      <button class='p-add-address g-link' data-page='me_address_new'>新增地址
+      <button class='p-add-address  ' @click="gotoPage()">新增地址
       </button>
     </div>
-  </div>
   </div>
 </template>
 <script>
@@ -60,6 +59,14 @@ export default {
           onOk: function() {
             ajax.user.deleteAddr(id).then(function(response) {
               console.log(response);
+              if (response.status == 200 && response.data.api_code == 200) {
+                self.$Message.info("删除地址成功");
+                self.listAddrData = self.listAddrData.filter(function(item) {
+                  return item.id != id;
+                })
+              } else {
+                self.$Message.error("删除地址失败");
+              }
             })
           },
         })
@@ -68,6 +75,21 @@ export default {
         if (id) {
           ajax.user.defaultAddr(id).then(function(response) {
             console.log(response);
+          })
+        }
+      },
+      gotoPage(id) {
+        if (id) {
+          this.$router.push({
+            path: 'address_edit',
+            query: {
+              id: id
+            }
+          })
+        } else {
+          this.$router.push({
+            path: 'address_edit',
+
           })
         }
       }

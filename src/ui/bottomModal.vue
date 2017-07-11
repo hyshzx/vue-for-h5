@@ -90,7 +90,7 @@ export default {
     left: 0;
     right: 0;
     background-color: #fff;
-    max-height: 60%;
+    max-height: 80%;
     min-height: 30%;
     overflow-y: auto;
     z-index: 10001;

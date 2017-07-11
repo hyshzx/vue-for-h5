@@ -73,7 +73,7 @@
         <a class="p_fast_buy">立即购买</a>
       </div>
     </div>
-    <bottom-modal v-model="showModal">
+    <bottom-modal v-model="showModal" class="choose">
       <div class="choose-msg flex">
         <div class="choose-img left">
           <img src="" alt="">
@@ -87,10 +87,17 @@
           </div>
           <div class="choose-classify hide">选择分类</div>
         </div>
-        <a class="p-close-modal-choose"><img src="img/common/icon_x.png" alt=""></a>
+        <a class="p-close-modal-choose"><img src="../../static/img/common/icon_x.png" alt=""></a>
       </div>
       <div class="classify">
         <div class='attr-list'>
+          <div v-for="(item,key) in showData">
+            <p class="attr-name">{{key}}</p>
+            <p class="attr-type" v-bind:data-name="key">
+              <!--   <span class="btn-s btn-white choose-attr" :class={active:isActive,uactive:isUactive,normal:!isActive&&!isUactive} v-for="(_item,index) in item" v-bind:data-name='_item' v-bind:data-index='index' @click="choose_attr(index)">{{_item}}</span> -->
+              <choose-attr v-for="(_item,index) in item" v-bind:chooseItem="_item" v-bind:chooseIndex="index" v-bind:chooseKey="key" v-on:choose-attr="choose_attr"></choose-attr>
+            </p>
+          </div>
         </div>
         <p class="p-num">
           <span>购买数量</span>
@@ -126,6 +133,10 @@ import {
 } from "../lib/axios.js"
 import topNav from "./topNavbar.vue"
 import bottomModal from "./bottomModal.vue"
+import chooseAttr from "./chooseAttr.vue"
+import {
+  sku
+} from "../lib/sku.js"
 export default {
   data() {
       return {
@@ -138,7 +149,13 @@ export default {
         PJ_data: [],
         DetailImg_data: [],
         isFavored: false,
-        showModal: false
+        showModal: false,
+        attrData: [],
+        showData: {},
+        goodArr: [],
+        isActive: false,
+        isUactive: false,
+        choosed: []
       }
     },
     created() {
@@ -161,6 +178,47 @@ export default {
             self.floor_4.comment = response.data.comment;
             response.data.detail_imgs.forEach((item) => {
               self.DetailImg_data.push('http://116.62.222.82:8082' + item);
+            });
+            // /////////////////////////////////////////////
+            let models = response.data.models;
+            let goodsData = [];
+            models.forEach(function(item) {
+              let skuItem = {};
+              let goodItem = {};
+
+              goodItem = {
+                id: item.id,
+                name: item.name,
+                price: item.price,
+                promote_price: item.promote_price,
+                real_stock: item.real_stock >= 0 ? item.real_stock : 0,
+                depreciation_cost: item.depreciation_cost
+              };
+              // 商品图片
+              if (item.imgs.length > 0 && item.imgs[0]) {
+                goodItem['img'] = item.imgs[0];
+              } else {
+                goodItem['img'] = item.imgs[0];
+              }
+              item.attrs.forEach(function(_item) {
+                skuItem[_item.name] = _item.val;
+              });
+              skuItem['id'] = item.id;
+              skuItem['num'] = item.real_stock >= 0 ? item.real_stock : 0;
+              goodsData.push(skuItem);
+              self.goodArr.push(goodItem);
+            });
+            // console.log(goodsData);
+            var showData = sku.init(goodsData);
+            console.log(showData);
+            // self.showData = showData;
+            let keys = Object.keys(showData);
+            keys.forEach(function(key) {
+              if (key == "id" || key == "num") {
+                return
+              } else {
+                self.showData[key] = showData[key];
+              }
             })
           }
         });
@@ -190,7 +248,8 @@ export default {
     },
     components: {
       topNav: topNav,
-      bottomModal: bottomModal
+      bottomModal: bottomModal,
+      chooseAttr: chooseAttr
     },
     methods: {
       fast_cart() {
@@ -205,6 +264,79 @@ export default {
             goodId: goodId
           }
         });
+      },
+      choose_attr(currentItem) {
+
+        let allItem = currentItem.$parent.$children;
+        let siblingsChildren = allItem.filter(function(item) {
+          return item.chooseKey == currentItem.chooseKey;
+        });
+        siblingsChildren.forEach((_item) => {
+          if (_item._uid == currentItem._uid && currentItem.isActive) {
+            _item.isActive = true;
+          } else {
+            _item.isActive = false;
+          }
+        });
+        let key = '';
+        var self = this;
+        // let choosedArray=Object.values(self.choosed);
+        for (let _key in self.choosed) {
+          // let item = self.choosed[_key];
+          if (self.choosed[_key]) {
+            if (self.choosed[_key].isActive && self.choosed[_key]._uid === currentItem._uid) {
+              self.choosed[_key].isActive = false;
+              // 遍历时不可以delete
+              self.choosed[_key] = null;
+            } else {
+
+              self.choosed[_key].isActive = true;
+
+              // 怎么找siblings?
+              // 通过key属性来对children进行分组
+              // $btn.addClass('active').siblings().removeClass('active');
+              if (self.choosed[_key].chooseItem !== '') {
+                key += self.choosed[_key].chooseItem + ';';
+              }
+            }
+          }
+        }
+
+        var result = sku.getResult(key, true);
+        allItem.forEach((item) => {
+          item.$data.isUactive = true
+        });
+        allItem.forEach((item) => {
+
+          if (result.indexOf(item.chooseItem) != -1) {
+            item.$data.isUactive = false;
+          }
+        });
+        if (sku.resultID && sku.resultID.id) {
+          $.each(self.goodArr, function(index, item) {
+            if (item.id == sku.resultID.id) {
+
+              $('.choose-price .p-price').html('价格:￥' + item.price);
+              // $('.choose-price .p-store').html("库存" + sureGood[0].real_stock + "件");
+              // currentStock = item.real_stock;
+              $('.choose-price .p-depreciation-price').html("(折旧费￥" + item.depreciation_cost + "/天)");
+              $('.p-old-fee-info .p-old-fee').html("￥" + item.depreciation_cost);
+              $('.choose-img img').attr('src', "http://116.62.222.82:8082" + item.img);
+              $('.choose .choose-classify').text();
+              // 取得商品id
+              $('.buy-bar').attr('data-id', item.id);
+              $('.buy-bar').attr('data-stock', item.real_stock);
+              // initStepper();
+              $('.choose-classify').html("已选择：" + key);
+            }
+          })
+        } else {
+          $('.buy-bar').attr('data-id', null);
+          $('.choose-classify').html('请选择规格');
+          // currentStock = 0;
+          // $('.stepper .num').val(1);
+        }
+
       }
     }
 }
@@ -402,6 +534,7 @@ export default {
   }
 }
 
+// /////////////////
 .bottom_good_area {
   width: 100%;
   height: 98px;
@@ -442,6 +575,183 @@ export default {
   }
   .p_btn_buy {
     background-color: #d43629;
+  }
+}
+
+// 
+// 
+// 
+// 
+// 
+.choose {
+  width: 750px;
+  // max-height: 80%;
+  z-index: 100;
+  overflow-y: auto;
+  background: #fff;
+  .choose-msg {
+    width: 100%;
+    height: 245px;
+    margin: 0 auto;
+    padding: 0px 15px 0px 24px;
+    position: relative;
+    a.p-close-modal-choose {
+      width: 50px;
+      height: 80px;
+      position: absolute;
+      right: 45px;
+      top: 60px;
+      img {
+        float: right;
+      }
+    }
+    .choose-img {
+      width: 200px;
+      height: 200px;
+      margin-right: 24px;
+      margin-top: 45px;
+      display: flex;
+      flex-shrink: 0;
+      img {
+        width: 200px;
+        height: 200px;
+        border: 1px solid #cbcbcb;
+      }
+    }
+    .right {
+      width: 100%;
+      margin-top: 85px;
+    }
+    .choose-price {
+      .p-price-info {
+        color: #d43629;
+        font-size: 32px;
+      }
+      span.p-depreciation-price {
+        color: #666;
+        font-size: 28px;
+      }
+      span.p-store {
+        color: #333;
+        font-size: 28px;
+      }
+      span.p-choose-attr {
+        color: #333;
+        font-size: 28px;
+      }
+    }
+  }
+  .classify {
+    padding: 30px 30px 30px;
+    width: 750px;
+    max-height: 666px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    .attr-name {
+      font-size: 30px;
+      margin-bottom: 2px;
+    }
+    .attr-type {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 30px;
+      span {
+        min-width: 160px;
+        display: inline-block;
+        margin-top: 20px;
+        margin-right: 36px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+      }
+      .active {
+        border-color: #0979bf;
+        color: #0979bf;
+      }
+      .uactive {
+        border-color: #999;
+        color: #999;
+        border-style: dashed;
+      }
+    }
+    .p-num {
+      font-size: 1.15rem;
+      margin-top: 59px;
+      // margin-bottom: 20px;
+    }
+  }
+  .buy-btn {
+    .addcar-btn,
+    .addcar-buy {
+      width: 100%;
+      height: 84px;
+      border: none;
+      outline: none;
+      text-align: center;
+      border-radius: 0px;
+      font-size: 30px;
+    }
+    .addcar-btn {
+      background-color: #ffb723;
+      color: #fff;
+    }
+    .addcar-buy {
+      background-color: #d43629;
+    }
+    .double {
+      display: flex;
+      button {
+        width: 50%;
+        display: inline-block;
+        color: #fff;
+      }
+    }
+  }
+  .num-ctn {
+    float: right;
+    width: 185px;
+  }
+  .stepper {
+    width: 185px;
+    line-height: 60px;
+    .add,
+    .sub {
+      font-size: 1.5rem;
+    }
+    .num {
+      line-height: 60px;
+      color: $mainFontColor;
+    }
+  }
+  .p-insurance-info {
+    width: 100%;
+    margin-top: 88px;
+    font-size: 30px;
+    color: #333;
+    span.p-insurance-price {
+      color: #d43629;
+    }
+    span.p_right {
+      float: right;
+      color: #38c1fa;
+      font-size: 30px;
+      font-weight: bold;
+    }
+  }
+  .p-old-fee-info {
+    width: 100%;
+    margin-top: 40px;
+    font-size: 30px;
+    color: #333;
+    span.p-old-fee {
+      color: #d43629;
+    }
+    span.p_right {
+      float: right;
+      color: #38c1fa;
+      font-size: 30px;
+      font-weight: bold;
+    }
   }
 }
 </style>

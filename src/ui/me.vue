@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="p_center_spearate"></div>
-      <div class="p_right_area flex">
+      <div class="p_right_area flex" @click="gotoPage(2)">
         <img src="../../static/img/me/icon_collection.png" alt="">
         <div class="p_right">
           <p>我的收藏</p>
@@ -74,8 +74,8 @@
       </div>
     </div>
     <!--  -->
-    <div class="p_floor p_floor_4 flex" @click="gotoPage(1)">
-      <div class="p_left_area flex">
+    <div class="p_floor p_floor_4 flex">
+      <div class="p_left_area flex" @click="gotoPage(1)">
         <img src="../../static/img/me/icon_ads.png" alt="">
         <div class="p_right">
           <p>地址管理</p>
@@ -142,9 +142,15 @@ export default {
     },
     gotoPage(id) {
       console.log(id);
-      this.$router.push({
-        path: 'address',
-      });
+      if (id == 1) {
+        this.$router.push({
+          path: 'address',
+        });
+      } else if (id == 2) {
+        this.$router.push({
+          path: 'collection',
+        });
+      }
     }
   }
 }
@@ -208,6 +214,9 @@ export default {
     background-color: #fff;
     align-items: center;
     border-bottom: 1px solid #cbcbcb;
+    p {
+      line-height: 1.2;
+    }
     .p_left_area,
     .p_right_area {
       width: 50%;

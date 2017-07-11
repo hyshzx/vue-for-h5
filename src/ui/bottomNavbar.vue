@@ -2,7 +2,7 @@
   <div class="bottom_navbar">
     <ul class="flex">
       <li class="p_bottom_nav" @click="gotToIndex"><img src="../../static/img/index/icon_home.png" height="44" width="44" alt="" v-if="showData.show_home" /><img src="../../static/img/index/icon_unhome.png" height="44" width="44" alt="" v-else/><span :class="{active:showData.show_home}">首页</span></li>
-      <li class="p_bottom_nav"><img src="../../static/img/index/icon_aftersales.png" height="44" width="44" alt="" v-if="showData.show_sale" /><img src="../../static/img/index/icon_unaftersales.png" height="44" width="44" alt="" v-else /><span :class="{active:showData.show_sale}">售后</span></li>
+      <li class="p_bottom_nav" @click="gotToService"><img src="../../static/img/index/icon_aftersales.png" height="44" width="44" alt="" v-if="showData.show_sale" /><img src="../../static/img/index/icon_unaftersales.png" height="44" width="44" alt="" v-else /><span :class="{active:showData.show_sale}">售后</span></li>
       <li class="p_bottom_nav"><img src="../../static/img/index/icon_recycling.png" height="44" width="44" alt="" v-if="showData.show_recycle" /><img src="../../static/img/index/icon_unrecycling.png" height="44" width="44" alt="" v-else /><span :class="{active:showData.show_recycle}">回收</span></li>
       <li class="p_bottom_nav" @click="gotToMe"><img src="../../static/img/index/icon_my.png" height="44" width="44" alt="" v-if="showData.show_me" /><img src="../../static/img/index/icon_unmy.png" height="44" width="44" alt="" v-else /><span :class="{active:showData.show_me}">我的</span></li>
     </ul>
@@ -18,6 +18,9 @@ export default {
     },
     gotToIndex() {
       this.$router.push('/');
+    },
+    gotToService() {
+      this.$router.push('service');
     }
   }
 }
@@ -26,6 +29,7 @@ export default {
 .bottom_navbar {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
   height: 98px;
   background-color: #fff;

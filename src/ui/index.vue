@@ -234,18 +234,21 @@ export default {
           font-size: 24px;
           color: #999;
           text-align: center;
+          line-height: 1.2;
         }
         .good_name {
           width: 260px;
           font-size: 28px;
           color: #333;
           text-align: center;
+          line-height: 1.2;
         }
         .good_price {
           width: 260px;
           font-size: 28px;
           color: #d43629;
           text-align: center;
+          line-height: 1.2;
         }
       }
     }

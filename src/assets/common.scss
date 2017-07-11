@@ -22,7 +22,7 @@ html {
   font-size: $baseFontSize;
   min-height: 700px;
   height: 100%;
-  overflow-y: hidden;
+  // overflow-y: hidden;
 }
 
 body {
@@ -281,6 +281,18 @@ span [id^="ads"] {
   display: none;
 }
 
+.btn-s {
+  line-height: 54px;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.btn-white {
+  border: 1px solid #808080;
+  background: #fff;
+  text-align: center;
+}
+
 // the css for confim dialog base the iview component modal
 .ivu-modal {
   width: 530px !important;
@@ -341,4 +353,39 @@ span [id^="ads"] {
       border-bottom-right-radius: 20px;
     }
   }
+}
+
+.ivu-message {
+  font-size: 1.15rem;
+  top: 40%;
+  text-align: center;
+  // width: 500px;
+  // left: 125px;
+}
+
+.ivu-message-notice-content {
+  width: 400px;
+  text-align: center;
+  padding: 0px;
+  color: #fff;
+  line-height: 1.4;
+  .ivu-icon {
+    display: none;
+  }
+}
+
+.ivu-message-warning {
+  width: 400px;
+  text-align: center;
+  padding: 5px 10px;
+  background: rgba(255, 0, 0, 0.5);
+  // background-color: #d43629;
+}
+
+.ivu-message-info {
+  width: 400px;
+  text-align: center;
+  padding: 5px 10px;
+  background: rgba(0, 0, 0, 0.5);
+  // background-color: #d43629;
 }
