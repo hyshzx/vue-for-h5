@@ -35,6 +35,7 @@ import {
 import {
   storage
 } from "../lib/storage.js"
+import axios from "axios"
 export default {
   data() {
       return {
@@ -65,6 +66,7 @@ export default {
             if (response.status == 200 && response.data.api_code == 200) {
               Store.commit('updateToken', response.data.token);
               storage.set('token', response.data.token);
+              axios.defaults.headers.common['Authorization'] = storage.get('token');
               if (response.data.user) {
                 response.data.user.avatar = "http://116.62.222.82:8082" + response.data.user.avatar;
               }
@@ -148,6 +150,7 @@ html {
             width: 550px;
             height: 70px;
             line-height: 70px;
+            text-align: center;
             border-radius: 35px;
             background-color: #fff;
             font-size: 30px;

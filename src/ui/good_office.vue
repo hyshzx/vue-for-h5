@@ -24,69 +24,69 @@ import {
 } from "../lib/axios.js"
 export default {
   data() {
-      return {
-        topData: {
-          title: '官方优品'
-        },
-        page: 0,
-        pageSize: 10,
-        listGoodData: []
-      }
-    },
-    created() {
-      this.getList();
-    },
-    components: {
-      topNav: topNav,
-
-    },
-    methods: {
-      getList: function() {
-        var self = this;
-        var classificationId = this.$route.query.id;
-        var params = {
-          page: this.page,
-          pageSize: this.pageSize,
-          classificationId: classificationId
-        }
-        console.log(params);
-        ajax.index.getGoodList(params).then((response) => {
-          console.log(response);
-          // this.listGoodData=[];
-          if (response.status == 200 && response.data.api_code == 200) {
-            let listData = response.data.data;
-            listData.forEach((item) => {
-              let oneItem = {};
-              oneItem.img = "http://116.62.222.82:8082" + item.show_img;
-              oneItem.price = parseInt(item.price);
-              oneItem.content = item.content;
-              oneItem.name = item.name;
-              oneItem.depreciation_cost_min = item.depreciation_cost_min;
-              oneItem.id = item.id;
-              self.listGoodData.push(oneItem);
-            })
-          }
-        })
+    return {
+      topData: {
+        title: '官方优品'
       },
-      gotoDetailPage(goodId) {
-        console.log(goodId);
-        this.$router.push({
-          path: 'good',
-          query: {
-            goodId: goodId
-          }
-        });
-      },
+      page: 0,
+      pageSize: 10,
+      listGoodData: []
     }
+  },
+  created() {
+    this.getList();
+  },
+  components: {
+    topNav: topNav,
+
+  },
+  methods: {
+    getList: function() {
+      var self = this;
+      var classificationId = this.$route.query.id;
+      var params = {
+        page: this.page,
+        pageSize: this.pageSize,
+        classificationId: classificationId
+      }
+      console.log(params);
+      ajax.index.getGoodList(params).then((response) => {
+        console.log(response);
+        // this.listGoodData=[];
+        if (response.status == 200 && response.data.api_code == 200) {
+          let listData = response.data.data;
+          listData.forEach((item) => {
+            let oneItem = {};
+            oneItem.img = "http://116.62.222.82:8082" + item.show_img;
+            oneItem.price = parseInt(item.price);
+            oneItem.content = item.content;
+            oneItem.name = item.name;
+            oneItem.depreciation_cost_min = item.depreciation_cost_min;
+            oneItem.id = item.id;
+            self.listGoodData.push(oneItem);
+          })
+        }
+      })
+    },
+    gotoDetailPage(goodId) {
+      console.log(goodId);
+      this.$router.push({
+        path: 'good',
+        query: {
+          goodId: goodId
+        }
+      });
+    },
+  }
 
 }
+
 </script>
 <style lang="sass" scoped>
 .content {
   position: relative;
   top: 88px;
-  width: 100%;
-  // height: 100%;
+  width: 100%; // height: 100%;
   // 
   .p-list {
     // width: 100%;
@@ -114,8 +114,7 @@ export default {
           position: absolute;
           bottom: 0px;
           width: 100%;
-          height: 100px;
-          // background-color: #fff;
+          height: 100px; // background-color: #fff;
           background: rgba(256, 256, 256, .8);
           padding-left: 24px;
           border-bottom-left-radius: 10px;
@@ -123,8 +122,7 @@ export default {
           .p_depreciation_cost {
             font-size: 22px;
             color: #666;
-            font-weight: bold;
-            // opacity: 1;
+            font-weight: bold; // opacity: 1;
             span.first {
               color: #d43629;
               font-size: 32px;
@@ -160,7 +158,7 @@ export default {
         }
       }
     }
-  }
-  // 
+  } // 
 }
+
 </style>

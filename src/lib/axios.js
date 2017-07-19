@@ -1,5 +1,7 @@
 import axios from "axios"
-import { storage } from "./storage.js"
+import {
+  storage
+} from "./storage.js"
 axios.defaults.headers.common['JOKE'] = "s7s7s3astar7mall!";
 if (storage.get('token')) {
   axios.defaults.headers.common['Authorization'] = storage.get('token');
@@ -17,7 +19,9 @@ const ajax = {
       return axios.get('/v1/comment/information/' + goodId)
     },
     getGoodList: function(params) {
-      return axios.get('/v1/goods/list', { params: params })
+      return axios.get('/v1/goods/list', {
+        params: params
+      })
     }
   },
   good: {
@@ -27,6 +31,15 @@ const ajax = {
     unfavorGood: function(id) {
       return axios.post('/v1/unfavor/goods/' + id);
     },
+    addToCart: function(id, data) {
+      return axios.post('/v1/cart/' + id, data);
+    },
+    getCart: function() {
+      return axios.get('/v1/cart');
+    },
+    preorder: function(id, data) {
+      return axios.post('/v1/preorder/goods/' + id, data);
+    }
   },
   user: {
     login: function(data) {
@@ -71,4 +84,6 @@ const ajax = {
   }
 
 };
-export { ajax }
+export {
+  ajax
+}

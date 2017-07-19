@@ -2,6 +2,8 @@
 $baseFontSize: 26px;
 $minorFontSize: 0.846rem;
 
+
+
 /*22px*/
 
 $biggerFontSize:1.07rem;
@@ -21,8 +23,7 @@ html {
   background: #efefef;
   font-size: $baseFontSize;
   min-height: 700px;
-  height: 100%;
-  // overflow-y: hidden;
+  height: 100%; // overflow-y: hidden;
 }
 
 body {
@@ -232,10 +233,8 @@ input[type="checkbox"]:checked {
 .header,
 .content,
 .footer {
-  width: 750px;
-  // width: 100%;
-  margin: 0 auto;
-  // -webkit-overflow-scrolling: touch;
+  width: 750px; // width: 100%;
+  margin: 0 auto; // -webkit-overflow-scrolling: touch;
 }
 
 .hide {
@@ -359,8 +358,8 @@ span [id^="ads"] {
   font-size: 1.15rem;
   top: 40%;
   text-align: center;
-  // width: 500px;
-  // left: 125px;
+  width: 500px;
+  left: 125px;
 }
 
 .ivu-message-notice-content {
@@ -368,7 +367,7 @@ span [id^="ads"] {
   text-align: center;
   padding: 0px;
   color: #fff;
-  line-height: 1.4;
+  line-height: 1.6;
   .ivu-icon {
     display: none;
   }
@@ -378,14 +377,12 @@ span [id^="ads"] {
   width: 400px;
   text-align: center;
   padding: 5px 10px;
-  background: rgba(255, 0, 0, 0.5);
-  // background-color: #d43629;
+  background: rgba(255, 0, 0, 0.5); // background-color: #d43629;
 }
 
 .ivu-message-info {
   width: 400px;
   text-align: center;
   padding: 5px 10px;
-  background: rgba(0, 0, 0, 0.5);
-  // background-color: #d43629;
+  background: rgba(0, 0, 0, 0.5); // background-color: #d43629;
 }

@@ -74,6 +74,7 @@ export default {
   left: 0;
   right: 0;
   height: 100%;
+  overflow-y:hidden;
   .modal_mask {
     position: fixed;
     top: 0;

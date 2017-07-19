@@ -11,13 +11,17 @@ import good_pj from '@/ui/good_pj'
 import address from '@/ui/address'
 import address_edit from '@/ui/address_edit'
 import collection from '@/ui/collection'
-
+import shoppingCart from '@/ui/shoppingCart'
+import preorder from '@/ui/preorder'
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   scrollBehavior: function(to, from, savedPosition) {
-    return { x: 0, y: 0 }
+    return {
+      x: 0,
+      y: 0
+    }
   },
   routes: [{
     path: '/',
@@ -27,6 +31,10 @@ export default new Router({
     path: '/me',
     name: 'me',
     component: me
+  }, {
+    path: '/shoppingCart',
+    name: 'shoppingCart',
+    component: shoppingCart
   }, {
     path: '/service',
     name: 'service',
@@ -59,6 +67,10 @@ export default new Router({
     path: '/collection',
     name: 'collection',
     component: collection
+  }, {
+    path: '/preorder',
+    name: 'preorder',
+    component: preorder
   }],
 
 })

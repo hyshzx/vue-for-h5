@@ -1,7 +1,11 @@
 <template>
   <div class="content">
-    <div class="p_search">
-      <Input v-model="search_value" placeholder="请输入你想搜索的商品"></Input>
+    <div class="p-search">
+      <div class="search-input">
+        <form id="search_form">
+          <input type="text" placeholder="搜索你想要了解的二手优品" class=" col-90" id="p-search">
+        </form>
+      </div>
     </div>
     <div class="p_banner">
       <Carousel autoplay>
@@ -133,21 +137,40 @@ export default {
   }
 
 }
+
 </script>
 <style lang="sass" scoped>
 .content {
   background-color: #efefef;
-  .p_search {
-    width: 100%;
+  .p-search {
+    width: 750px;
     height: 88px;
-    line-height: 88px;
-    input {
-      height: 60px;
-      font-size: 32px;
-      line-height: 60px;
+    position: fixed;
+    margin: 0 auto;
+    top: 0px; // left: 50%;
+    // transform: translateX(-50%); 
+    z-index: 300;
+    background: -webkit-linear-gradient(90deg, #00c7e9, #09B8F9);
+    background: -o-linear-gradient(90deg, #00c7e9, #09B8F9);
+    background: -moz-linear-gradient(90deg, #00c7e9, #09B8F9);
+    background: linear-gradient(90deg, #00c7e9, #09B8F9);
+    .search-input {
+      height: 100%;
+      padding: 14px 24px;
+      input {
+        height: 60px;
+        width: 90%;
+        border: 1px solid #fff;
+        padding-left: 60px;
+        border-radius: 30px;
+        line-height: 60px;
+        background: url('../../static/img/index/icon_search.png') no-repeat 22px 13px;
+        color: #fff;
+      }
     }
   }
   .p_banner {
+    margin-top: 88px;
     height: 420px;
     img {
       height: 100%;
@@ -254,4 +277,5 @@ export default {
     }
   }
 }
+
 </style>

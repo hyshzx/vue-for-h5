@@ -39,7 +39,7 @@
     </div>
     <!--  -->
     <div class="p_floor p_floor_2 flex">
-      <div class="p_left_area flex">
+      <div class="p_left_area flex" @click="gotoPage(3)">
         <img src="../../static/img/me/icon_shoppingcart.png" alt="">
         <div class="p_right">
           <p>购物车</p>
@@ -150,10 +150,15 @@ export default {
         this.$router.push({
           path: 'collection',
         });
+      } else if (id == 3) {
+        this.$router.push({
+          path: 'shoppingCart',
+        });
       }
     }
   }
 }
+
 </script>
 <style lang="sass" scoped>
 .content {
@@ -254,4 +259,5 @@ export default {
     margin-bottom: 118px;
   }
 }
+
 </style>
