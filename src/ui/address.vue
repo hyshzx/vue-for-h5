@@ -5,7 +5,8 @@
       <div class='p-single-address' v-for="item in listAddrData">
         <div class='p-main'>
           <div class="p-person">
-            收货人:<span class="p-name">{{item.receiver}}</span>
+            收货人:
+            <span class="p-name">{{item.receiver}}</span>
             <span class="p-pNum">{{item.mobile}}</span>
           </div>
           <div class="p-address">{{item.name}}</div>
@@ -25,76 +26,79 @@
   </div>
 </template>
 <script>
-import topNav from "./topNavbar.vue"
-import {
-  ajax
-} from "../lib/axios.js"
+import topNav from "./topNavbar.vue";
+import { ajax } from "../lib/axios.js";
 export default {
-  data() {
-      return {
-        topData: {
-          title: '我的地址'
-        },
-        listAddrData: []
-      }
+    data() {
+        return {
+            topData: {
+                title: "我的地址"
+            },
+            listAddrData: []
+        };
     },
     created() {
-      var self = this;
-      ajax.user.getListAddr().then(function(response) {
-        console.log(response);
-        if (response.status == 200 && response.data.api_code == 200) {
-          self.listAddrData = response.data.data;
-        }
-      })
+        console.log(1);
+        var self = this;
+        ajax.user.getListAddr().then(function(response) {
+            console.log(response);
+            if (response.status == 200 && response.data.api_code == 200) {
+                self.listAddrData = response.data.data;
+            }
+        });
     },
     components: {
-      topNav: topNav,
+        topNav: topNav
     },
     methods: {
-      deleteAddr(id) {
-        var self = this;
-        this.$Modal.confirm({
-          title: '提示',
-          content: "确认删除该地址嘛？",
-          onOk: function() {
-            ajax.user.deleteAddr(id).then(function(response) {
-              console.log(response);
-              if (response.status == 200 && response.data.api_code == 200) {
-                self.$Message.info("删除地址成功");
-                self.listAddrData = self.listAddrData.filter(function(item) {
-                  return item.id != id;
-                })
-              } else {
-                self.$Message.error("删除地址失败");
-              }
-            })
-          },
-        })
-      },
-      defaultChoose(id) {
-        if (id) {
-          ajax.user.defaultAddr(id).then(function(response) {
-            console.log(response);
-          })
-        }
-      },
-      gotoPage(id) {
-        if (id) {
-          this.$router.push({
-            path: 'address_edit',
-            query: {
-              id: id
+        deleteAddr(id) {
+            var self = this;
+            this.$Modal.confirm({
+                title: "提示",
+                content: "确认删除该地址嘛？",
+                onOk: function() {
+                    ajax.user.deleteAddr(id).then(function(response) {
+                        console.log(response);
+                        if (
+                            response.status == 200 &&
+                            response.data.api_code == 200
+                        ) {
+                            self.$Message.info("删除地址成功");
+                            self.listAddrData = self.listAddrData.filter(
+                                function(item) {
+                                    return item.id != id;
+                                }
+                            );
+                        } else {
+                            self.$Message.error("删除地址失败");
+                        }
+                    });
+                }
+            });
+        },
+        defaultChoose(id) {
+            if (id) {
+                ajax.user.defaultAddr(id).then(function(response) {
+                    console.log(response);
+                });
             }
-          })
-        } else {
-          this.$router.push({
-            path: 'address_edit',
-
-          })
+        },
+        gotoPage(id) {
+            if (id) {
+                this.$router.push({
+                    path: "address_edit",
+                    query: {
+                        id: id
+                    }
+                });
+            } else {
+                this.$router.push({
+                    path: "address_edit"
+                });
+            }
         }
-      }
     }
-}
+};
 </script>
 <style lang="sass" scoped>
 .p-no-address {
