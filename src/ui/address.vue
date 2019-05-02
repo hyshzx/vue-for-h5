@@ -39,6 +39,7 @@ export default {
     },
     created() {
         console.log(1);
+        console.log(2);
         var self = this;
         ajax.user.getListAddr().then(function(response) {
             console.log(response);
